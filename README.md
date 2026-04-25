@@ -7,8 +7,6 @@ A *production-shaped* prototype of a **multi-agent QA workflow** built on **Lang
 ![Streamlit](https://img.shields.io/badge/Streamlit-UI-red)
 ![Deploy](https://img.shields.io/badge/Deploy-Streamlit%20Cloud%20%7C%20HF%20Spaces%20%7C%20Docker-green)
 
-> **🚀 One-click deploy** — see [DEPLOYMENT.md](DEPLOYMENT.md) for free deployment on Streamlit Community Cloud, Hugging Face Spaces, Render, Railway, or Fly.io.
-
 > **⚠️ Honest scope note** — this is a *demo-grade* prototype that uses production-style patterns (typed state, tool-binding, structured logging, CI). It is **not** a hardened production system: human review of every generated test suite is expected, and the limitations listed in [Known Limitations & Roadmap](#known-limitations--roadmap) are real.
 
 ---
@@ -25,7 +23,6 @@ A *production-shaped* prototype of a **multi-agent QA workflow** built on **Lang
 - [Run the app](#run-the-app)
   - [Demo script (60 seconds)](#demo-script-60-seconds)
 - [How agentic behavior is demonstrated](#how-agentic-behavior-is-demonstrated)
-- [Reliability, security & observability](#reliability-security--observability)
 - [Configuration reference](#configuration-reference)
 - [Per-agent model assignment](#per-agent-model-assignment)
 - [Testing & evaluation](#testing--evaluation)
