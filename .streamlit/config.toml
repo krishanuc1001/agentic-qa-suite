@@ -1,0 +1,20 @@
+[theme]
+base = "dark"
+primaryColor = "#6C5CE7"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#1B1F2A"
+textColor = "#FAFAFA"
+font = "sans serif"
+
+[server]
+# Disable file watcher metrics on hosted runtimes (saves CPU)
+fileWatcherType = "auto"
+headless = true
+runOnSave = false
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = true

@@ -1,0 +1,7 @@
+# Development-only dependencies (installed via `pip install -r requirements-dev.txt`).
+# Runtime deps live in requirements.txt.
+-r requirements.txt
+
+pytest~=8.3
+pytest-mock~=3.14
+ruff~=0.6

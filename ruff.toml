@@ -1,0 +1,14 @@
+# Ruff configuration — kept minimal so CI stays green out of the box.
+line-length = 100
+target-version = "py311"
+
+[lint]
+select = ["E", "F", "I", "W", "B"]
+ignore = [
+    "E501",  # long lines tolerated for prompt strings
+    "B008",  # default factory args used by Pydantic
+]
+
+[lint.per-file-ignores]
+"tests/*" = ["B011", "F401"]
+"evals/*" = ["E402"]
