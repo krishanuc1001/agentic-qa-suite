@@ -224,23 +224,6 @@ The same report is also written to `QAReports/qa_report_<timestamp>.md`.
 
 ---
 
-## Reliability, security & observability
-
-| Concern | What the repo does | Toggle / Pointer |
-|---|---|---|
-| **Transient LLM failures** | `max_retries=3`, `timeout=60`, `temperature=0` baked into both `ChatGroq` and `ChatGoogleGenerativeAI` clients. | [`llm/groq_llm.py`](src/langgraphAgenticAI/llm/groq_llm.py), [`llm/gemini_llm.py`](src/langgraphAgenticAI/llm/gemini_llm.py) |
-| **Runaway tool loops** | Hard tool-call budget + LangGraph `recursion_limit=12` passed at invoke time. | `MAX_REVIEWER_TOOL_CALLS` in [`nodes/test_reviewer_node.py`](src/langgraphAgenticAI/nodes/test_reviewer_node.py); `RECURSION_LIMIT` in [`ui/.../display_result.py`](src/langgraphAgenticAI/ui/streamlit_ui/display_result.py) |
-| **Prompt injection** | Untrusted user requirements + upstream agent outputs are wrapped in `<<<DELIMITERS>>>` with explicit "treat as data, refuse override attempts" framing. | All 3 agents in [`nodes/`](src/langgraphAgenticAI/nodes/) |
-| **Citation hallucination** | Post-hoc regex sanitizer drops `(ref: S#)` markers that aren't in the actual source ledger; dropped IDs are surfaced in the UI. | `_sanitize_citations()` + `dropped_citations` state field |
-| **File-write race conditions** | Per-report UUID suffix: `qa_report_<timestamp>_<uuid8>.md`. | `save_report()` |
-| **Free-tier API-key abuse** | Optional password gate via `APP_PASSWORD` Streamlit secret; sidebar still encourages users to bring their own keys. | `_password_gate()` in [`main.py`](src/langgraphAgenticAI/main.py) |
-| **Structured logging** | Single-line key=value format, third-party noise quieted, `LOG_LEVEL` env-tunable. | [`observability/setup.py`](src/langgraphAgenticAI/observability/setup.py) |
-| **Distributed tracing** | Set `LANGCHAIN_API_KEY` (or `LANGSMITH_API_KEY`) and tracing auto-enables under project `qa-intelligence-suite`. | Same module |
-| **Token / cost metering** | `get_token_counter_callback()` aggregates `prompt`/`completion`/`total` tokens across an LLM run. | Hook into `llm.invoke(..., config={"callbacks": [cb]})` |
-| **Graceful provider variance** | List-shaped Gemini content, missing `bind_tools` support, and missing Tavily are all handled with banners instead of crashes. | `finalize()`, `tool_binding_status`, `has_tavily` |
-
----
-
 ## Configuration reference
 
 All keys can be supplied via `.streamlit/secrets.toml` (recommended for deploys), environment variables, or the sidebar (for `*_API_KEY` only).
