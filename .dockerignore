@@ -1,0 +1,16 @@
+.git
+.gitignore
+.venv
+venv
+env
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.streamlit/secrets.toml
+QAReports/qa_report_*.md
+.vscode
+.idea
+*.log
+DEPLOYMENT.md
