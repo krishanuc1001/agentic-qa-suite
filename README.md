@@ -335,18 +335,18 @@ python -m evals.run_evals
 
 ## Tech stack
 
-| Layer          | Tech                                                                           |
-| -------------- | ------------------------------------------------------------------------------ |
-| Orchestration  | LangGraph (`StateGraph`, `ToolNode`, `tools_condition`, `MemorySaver`)         |
-| LLM clients    | `langchain_groq`, `langchain-google-genai`                                     |
+| Layer          | Tech                                                                          |
+| -------------- | ----------------------------------------------------------------------------- |
+| Orchestration  | LangGraph (`StateGraph`, `ToolNode`, `tools_condition`, `MemorySaver`)        |
+| LLM clients    | `langchain_groq`, `langchain-google-genai`                                    |
 | Tools          | `langchain_community.tools.tavily_search.TavilySearchResults`, `tavily-python` |
-| Schemas        | Pydantic v2 (scaffolded for `with_structured_output` migration)                |
-| UI             | Streamlit (sidebar config + 5-tab streaming results view)                      |
-| Observability  | stdlib `logging` + LangSmith (auto-wired via env)                              |
-| Testing & lint | `pytest`, `pytest-mock`, `ruff`                                                |
-| CI/CD          | GitHub Actions → Streamlit Cloud / HF Spaces / Render / Railway / Fly.io       |
-| Container      | `python:3.11-slim` Docker base                                                 |
-| Language       | Python 3.11                                                                    |
+| Schemas        | Pydantic v2 (scaffolded for `with_structured_output` migration)               |
+| UI             | Streamlit (sidebar config + 5-tab streaming results view)                     |
+| Observability  | stdlib `logging` + LangSmith (auto-wired via env)                             |
+| Testing & lint | `pytest`, `pytest-mock`, `ruff`                                               |
+| CI/CD          | GitHub Actions → Streamlit Cloud / HF Spaces       |
+| Container      | `python:3.11-slim` Docker base                                                |
+| Language       | Python 3.11                                                                   |
 
 ---
 
