@@ -1,6 +1,6 @@
 # 🤖 Req2Test — Intelligent Requirement-to-Test Transformation
 
-A *production-shaped* prototype of a **multi-agent QA workflow** built on **LangGraph** using **Stateful** agentic AI capabilities - that transforms raw user stories into effective & prioritized test suites in minutes.
+A _production-shaped_ prototype of a **multi-agent QA workflow** built on **LangGraph** using **Stateful** agentic AI capabilities - that transforms raw user stories into effective & prioritized test suites in minutes.
 **Req2Test** chains three specialized AI agents— **Requirement Analyzer**, **Test Case Generator**, and **Test Case Reviewer** — to produce comprehensive Gherkin scenarios, triage matrices, and citations to industry best practices (OWASP, RFC, tool recommendations).
 
 ![LangGraph](https://img.shields.io/badge/LangGraph-Multi--Agent-blue)
@@ -8,7 +8,7 @@ A *production-shaped* prototype of a **multi-agent QA workflow** built on **Lang
 ![Streamlit](https://img.shields.io/badge/Streamlit-UI-red)
 ![Deploy](https://img.shields.io/badge/Deploy-Streamlit%20Cloud%20%7C%20HF%20Spaces%20%7C%20Docker-green)
 
-> **⚠️ Honest scope note** — this is a *demo-grade* prototype that uses production-style patterns (typed state, tool-binding, structured logging, CI). It is **not** a hardened production system: human review of every generated test suite is expected.
+> **⚠️ Honest scope note** — this is a _demo-grade_ prototype that uses production-style patterns (typed state, tool-binding, structured logging, CI). It is **not** a hardened production system: human review of every generated test suite is expected.
 
 ---
 
@@ -16,6 +16,13 @@ A *production-shaped* prototype of a **multi-agent QA workflow** built on **Lang
 
 - [What it does](#what-it-does)
   - [Workflow graph](#workflow-graph)
+- [Deployment](#deployment)
+- [Application Snapshots](#application-snapshots)
+  - [Agent 1 - Requirement Analyzer](#agent-1---requirement-analyzer)
+  - [Agent 2 - Test Case Generator](#agent-2---test-case-generator)
+  - [Agent 3 - Test Case Reviewer](#agent-3---test-case-reviewer)
+  - [Sources (Audit Trail)](#sources-audit-trail)
+  - [Consolidated Report](#consolidated-report)
 - [Key features](#key-features)
 - [Project structure](#project-structure)
 - [Installation](#installation)
@@ -28,7 +35,6 @@ A *production-shaped* prototype of a **multi-agent QA workflow** built on **Lang
 - [Per-agent model assignment](#per-agent-model-assignment)
 - [Testing & evaluation](#testing--evaluation)
 - [Tech stack](#tech-stack)
-- [Deployment](#deployment)
 - [License](#license)
 
 ---
@@ -37,12 +43,49 @@ A *production-shaped* prototype of a **multi-agent QA workflow** built on **Lang
 
 Three specialized agents collaborate over a shared **stateful** LangGraph workflow:
 
-| # | Agent | Persona | Output |
-|---|---|---|---|
-| 1 | 🧠 **RequirementAnalyzerAgent** | Senior BA / QA Lead | Structured analysis: feature summary, actors, acceptance criteria, preconditions, ambiguities, implicit NFRs |
-| 2 | 🧪 **TestCaseGeneratorAgent**   | Senior SDET           | 8–15 Gherkin test cases (positive / negative / boundary / security / accessibility) |
-| 3 | 🔍 **TestReviewerAgent**        | QA Manager + autonomous tool-user | Triage matrix (P1–P4, risk, automation feasibility, recommended tool), coverage gaps, risk assessment, execution order — with **(ref: S#) citations** to a pre-researched source ledger |
-| — | 💾 **save_report**              | Persistence step      | Writes consolidated Markdown report to `QAReports/qa_report_<timestamp>.md` |
+| #   | Agent                           | Persona                           | Output                                                                                                                                                                                  |
+| --- | ------------------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | 🧠 **RequirementAnalyzerAgent** | Senior BA / QA Lead               | Structured analysis: feature summary, actors, acceptance criteria, preconditions, ambiguities, implicit NFRs                                                                            |
+| 2   | 🧪 **TestCaseGeneratorAgent**   | Senior SDET                       | 8–15 Gherkin test cases (positive / negative / boundary / security / accessibility)                                                                                                     |
+| 3   | 🔍 **TestReviewerAgent**        | QA Manager + autonomous tool-user | Triage matrix (P1–P4, risk, automation feasibility, recommended tool), coverage gaps, risk assessment, execution order — with **(ref: S#) citations** to a pre-researched source ledger |
+| —   | 💾 **save_report**              | Persistence step                  | Writes consolidated Markdown report to `QAReports/qa_report_<timestamp>.md`                                                                                                             |
+
+---
+
+## Deployment
+
+This app is deployed using **free** tier to the platforms below from the same repo.
+
+| Platform                  | Free tier              | Link                            |
+| ------------------------- | ---------------------- | ------------------------------- |
+| Streamlit Community Cloud | Unlimited public apps  | https://req2test.streamlit.app/ |
+| Hugging Face Spaces       | 16 GB RAM (Docker SDK) |
+
+---
+
+## Application Snapshots
+
+### Agent 1 - Requirement Analyzer
+
+![img.png](img.png)
+
+### Agent 2 - Test Case Generator
+
+![img_1.png](img_1.png)
+
+### Agent 3 - Test Case Reviewer
+
+![img_2.png](img_2.png)
+
+### Sources (Audit Trail)
+
+![img_3.png](img_3.png)
+
+### Consolidated Report
+
+![img_4.png](img_4.png)
+
+---
 
 ### Workflow graph
 
@@ -150,7 +193,7 @@ src/
 ```
 
 ```zsh
-cd agentic-qa-suite
+cd Req2Test-Agentic-QA
 ```
 
 ```zsh
@@ -158,11 +201,13 @@ python -m venv .venv
 ```
 
 ### Windows
+
 ```zsh
 .venv\Scripts\activate
 ```
 
 ### macOS / Linux
+
 ```zsh
 source .venv/bin/activate
 ```
@@ -187,18 +232,18 @@ The UI opens at [http://localhost:8501](http://localhost:8501).
 
 1. Sidebar → **Select LLM**: choose `Groq` (recommended) or `Gemini`.
 2. Pick a model (e.g. `llama-3.3-70b-versatile` or `gemini-2.5-flash`) and paste the matching API key.
-3. *(Optional)* Paste a Tavily API key to enable Agent 3's web grounding & autonomous tool loop.
+3. _(Optional)_ Paste a Tavily API key to enable Agent 3's web grounding & autonomous tool loop.
 4. Paste a user story / requirement into the text area — a ready-to-use **password-reset** example is shown as placeholder text.
 5. Click **🚀 Run Multi-Agent QA Workflow**.
 6. Streaming status updates appear per agent (`🧠 Agent 1 · Analyzing...` → `🧪 Agent 2 · Generating...` → `🔎 Agent 3 · Researching...` → `🤖 Reasoning` → `📝 Finalizing` → `💾 Saving`); on completion, results render across **5 tabs**:
 
-| Tab | Content |
-|---|---|
-| 🧠 Agent 1 · Analysis            | Structured requirement breakdown |
-| 🧪 Agent 2 · Test Cases          | Gherkin test suite (8–15 scenarios) |
-| 🔍 Agent 3 · Review & Triage     | Triage matrix with `(ref: S#)` citations, coverage gaps, risk assessment, execution order |
-| 📚 Sources (Audit Trail)         | Interactive table of S1..SN references |
-| 📄 Consolidated Report           | Full Markdown report + **download** button |
+| Tab                          | Content                                                                                   |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| 🧠 Agent 1 · Analysis        | Structured requirement breakdown                                                          |
+| 🧪 Agent 2 · Test Cases      | Gherkin test suite (8–15 scenarios)                                                       |
+| 🔍 Agent 3 · Review & Triage | Triage matrix with `(ref: S#)` citations, coverage gaps, risk assessment, execution order |
+| 📚 Sources (Audit Trail)     | Interactive table of S1..SN references                                                    |
+| 📄 Consolidated Report       | Full Markdown report + **download** button                                                |
 
 The same report is also written to `QAReports/qa_report_<timestamp>.md`.
 
@@ -206,18 +251,18 @@ The same report is also written to `QAReports/qa_report_<timestamp>.md`.
 
 ## How agentic behavior is demonstrated
 
-| Pattern | Where |
-|---|---|
-| **Stateful multi-agent collaboration** | Each agent's output is written to a typed [`State`](src/langgraphAgenticAI/state/state.py) field consumed by the next agent. |
-| **Pre-fetch + ground** | `reviewer_research` runs 3 deterministic Tavily queries to build a stable source ledger before the LLM reasons. |
-| **Bound-tool autonomous loop** | `reviewer_agent` uses `llm.bind_tools([Tavily])`; LangGraph's `tools_condition` (with `messages_key="reviewer_messages"`) routes to a `ToolNode` whenever the model emits `tool_calls`, then loops back. |
-| **Channel isolation** | The reviewer's tool-call history lives in a private `reviewer_messages` channel with its own `add_messages` reducer. |
-| **Bounded autonomy** | `MAX_REVIEWER_TOOL_CALLS=4` is enforced inside `agent()`; once exhausted, a stop-instruction is injected and the plain LLM produces the final report. |
-| **Citation auditability** | Pre-fetched sources have stable IDs `S1..SN`; `_sanitize_citations()` strips any `(ref: S#)` not in the ledger before saving. |
-| **Streaming UX** | `display_result.py` consumes `graph.stream(..., stream_mode="updates")` and renders a per-node label as each agent finishes. |
-| **Optional checkpointing** | When `LANGGRAPH_CHECKPOINT_ENABLED=1`, the graph is compiled with `MemorySaver` and the UI passes a stable `thread_id` so runs can be resumed. |
-| **Graceful degradation** | The graph builder omits the tool loop when Tavily isn't configured; the UI shows a banner whenever `bind_tools` falls back. |
-| **Audit trail** | Every cited source is preserved in a Markdown table at the end of the saved report; report filenames are UUID-suffixed to prevent multi-user collisions. |
+| Pattern                                | Where                                                                                                                                                                                                    |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stateful multi-agent collaboration** | Each agent's output is written to a typed [`State`](src/langgraphAgenticAI/state/state.py) field consumed by the next agent.                                                                             |
+| **Pre-fetch + ground**                 | `reviewer_research` runs 3 deterministic Tavily queries to build a stable source ledger before the LLM reasons.                                                                                          |
+| **Bound-tool autonomous loop**         | `reviewer_agent` uses `llm.bind_tools([Tavily])`; LangGraph's `tools_condition` (with `messages_key="reviewer_messages"`) routes to a `ToolNode` whenever the model emits `tool_calls`, then loops back. |
+| **Channel isolation**                  | The reviewer's tool-call history lives in a private `reviewer_messages` channel with its own `add_messages` reducer.                                                                                     |
+| **Bounded autonomy**                   | `MAX_REVIEWER_TOOL_CALLS=4` is enforced inside `agent()`; once exhausted, a stop-instruction is injected and the plain LLM produces the final report.                                                    |
+| **Citation auditability**              | Pre-fetched sources have stable IDs `S1..SN`; `_sanitize_citations()` strips any `(ref: S#)` not in the ledger before saving.                                                                            |
+| **Streaming UX**                       | `display_result.py` consumes `graph.stream(..., stream_mode="updates")` and renders a per-node label as each agent finishes.                                                                             |
+| **Optional checkpointing**             | When `LANGGRAPH_CHECKPOINT_ENABLED=1`, the graph is compiled with `MemorySaver` and the UI passes a stable `thread_id` so runs can be resumed.                                                           |
+| **Graceful degradation**               | The graph builder omits the tool loop when Tavily isn't configured; the UI shows a banner whenever `bind_tools` falls back.                                                                              |
+| **Audit trail**                        | Every cited source is preserved in a Markdown table at the end of the saved report; report filenames are UUID-suffixed to prevent multi-user collisions.                                                 |
 
 ---
 
@@ -225,16 +270,16 @@ The same report is also written to `QAReports/qa_report_<timestamp>.md`.
 
 All keys can be supplied via `.streamlit/secrets.toml` (recommended for deploys), environment variables, or the sidebar (for `*_API_KEY` only).
 
-| Key | Required? | Effect |
-|---|---|---|
-| `GROQ_API_KEY`                  | One of these two | Picks Groq as LLM provider |
-| `GEMINI_API_KEY`                | One of these two | Picks Gemini as LLM provider |
-| `TAVILY_API_KEY`                | Optional | Enables Agent 3's source ledger + autonomous tool loop |
-| `LANGCHAIN_API_KEY`             | Optional | Auto-enables LangSmith tracing |
-| `LANGCHAIN_PROJECT`             | Optional | Defaults to `qa-intelligence-suite` |
-| `LANGGRAPH_CHECKPOINT_ENABLED`  | Optional | `1`/`true` to wire in-memory checkpointing |
-| `APP_PASSWORD`                  | Optional | Locks the deployed app behind a password |
-| `LOG_LEVEL`                     | Optional | Defaults to `INFO`; set `DEBUG` for verbose logs |
+| Key                            | Required?        | Effect                                                 |
+| ------------------------------ | ---------------- | ------------------------------------------------------ |
+| `GROQ_API_KEY`                 | One of these two | Picks Groq as LLM provider                             |
+| `GEMINI_API_KEY`               | One of these two | Picks Gemini as LLM provider                           |
+| `TAVILY_API_KEY`               | Optional         | Enables Agent 3's source ledger + autonomous tool loop |
+| `LANGCHAIN_API_KEY`            | Optional         | Auto-enables LangSmith tracing                         |
+| `LANGCHAIN_PROJECT`            | Optional         | Defaults to `qa-intelligence-suite`                    |
+| `LANGGRAPH_CHECKPOINT_ENABLED` | Optional         | `1`/`true` to wire in-memory checkpointing             |
+| `APP_PASSWORD`                 | Optional         | Locks the deployed app behind a password               |
+| `LOG_LEVEL`                    | Optional         | Defaults to `INFO`; set `DEBUG` for verbose logs       |
 
 See [`.streamlit/secrets.toml.example`](.streamlit/secrets.toml.example) for a copy-paste template.
 
@@ -267,6 +312,7 @@ pip install -r requirements-dev.txt
 ```
 
 ### Unit tests (no API keys needed; uses FakeLLM fixture)
+
 ```zsh
 pytest -ra
 ```
@@ -276,42 +322,31 @@ ruff check src tests evals
 ```
 
 ### End-to-end heuristic eval against the golden dataset (needs a real LLM key)
+
 ```zsh
 python -m evals.run_evals
 ```
 
-* **Unit tests** cover the graph builder, citation sanitizer, reviewer finalize (string + Gemini list-of-parts shapes), tool-call budget, save-report UUID/sections, Pydantic schema enums, and the observability bootstrap.
-* **CI**: every push / PR runs ruff + pytest on Python 3.11 via [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
-* **Eval harness**: [`evals/run_evals.py`](evals/run_evals.py) runs each requirement in [`evals/golden_dataset.json`](evals/golden_dataset.json) through the graph and scores it on must-have categories, must-have keywords, and minimum test-case count. Returns non-zero when the average drops below 60% — ready to drop into CI as a regression gate.
+- **Unit tests** cover the graph builder, citation sanitizer, reviewer finalize (string + Gemini list-of-parts shapes), tool-call budget, save-report UUID/sections, Pydantic schema enums, and the observability bootstrap.
+- **CI**: every push / PR runs ruff + pytest on Python 3.11 via [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+- **Eval harness**: [`evals/run_evals.py`](evals/run_evals.py) runs each requirement in [`evals/golden_dataset.json`](evals/golden_dataset.json) through the graph and scores it on must-have categories, must-have keywords, and minimum test-case count. Returns non-zero when the average drops below 60% — ready to drop into CI as a regression gate.
 
 ---
 
 ## Tech stack
 
-| Layer | Tech |
-|---|---|
-| Orchestration  | LangGraph (`StateGraph`, `ToolNode`, `tools_condition`, `MemorySaver`) |
-| LLM clients    | `langchain_groq`, `langchain-google-genai` |
+| Layer          | Tech                                                                           |
+| -------------- | ------------------------------------------------------------------------------ |
+| Orchestration  | LangGraph (`StateGraph`, `ToolNode`, `tools_condition`, `MemorySaver`)         |
+| LLM clients    | `langchain_groq`, `langchain-google-genai`                                     |
 | Tools          | `langchain_community.tools.tavily_search.TavilySearchResults`, `tavily-python` |
-| Schemas        | Pydantic v2 (scaffolded for `with_structured_output` migration) |
-| UI             | Streamlit (sidebar config + 5-tab streaming results view) |
-| Observability  | stdlib `logging` + LangSmith (auto-wired via env) |
-| Testing & lint | `pytest`, `pytest-mock`, `ruff` |
-| CI/CD          | GitHub Actions → Streamlit Cloud / HF Spaces / Render / Railway / Fly.io |
-| Container      | `python:3.11-slim` Docker base |
-| Language       | Python 3.11 |
-
----
-
-## Deployment
-
-This app deploys for **free** to multiple platforms from the same repo.
-
-| Platform | Free tier | Best for |
-|---|---|---|
-| Streamlit Community Cloud | Unlimited public apps | Fastest path, recommended |
-| Hugging Face Spaces       | 16 GB RAM (Docker SDK)  | ML-native showcase |
-| Render / Railway / Fly.io | Container-based         | Custom domain / scaling |
+| Schemas        | Pydantic v2 (scaffolded for `with_structured_output` migration)                |
+| UI             | Streamlit (sidebar config + 5-tab streaming results view)                      |
+| Observability  | stdlib `logging` + LangSmith (auto-wired via env)                              |
+| Testing & lint | `pytest`, `pytest-mock`, `ruff`                                                |
+| CI/CD          | GitHub Actions → Streamlit Cloud / HF Spaces / Render / Railway / Fly.io       |
+| Container      | `python:3.11-slim` Docker base                                                 |
+| Language       | Python 3.11                                                                    |
 
 ---
 
@@ -320,4 +355,3 @@ This app deploys for **free** to multiple platforms from the same repo.
 MIT
 
 ---
-
